@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import {
-  SafeAreaView,
+  View,
   StyleSheet,
   useColorScheme,
 } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
-import requestBackgroundLocationPermission from './useApp';
+import useApp from './useApp';
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -15,43 +15,42 @@ function App(): JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  useEffect(() => {
-    requestBackgroundLocationPermission();
-  }, []);
-  
-
+  const { latitude, longitude } = useApp();
+  console.log(latitude, longitude);
   // <a href="https://gps-coordinates.org/my-location.php?lat=10.0526937&lng=76.3521401" target="_blank">(10.0526937,76.3521401)</a>
 
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <View>
       <MapView
-        style={{ flex: 1 }}
-      >
-        <Marker coordinate={{
-          latitude: 10.0526937,
-          longitude: 76.3521401
-        }} />
+        // provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+        style={styles.map}
+        // ref={ref => map = ref}
+        showsUserLocation={true}
+        showsMyLocationButton={true}
+        region={{
+          latitude: latitude || 10.5276,
+          longitude: longitude || 76.2144,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}>
+        <Marker
+          coordinate={{
+            latitude: latitude ? latitude : 10.5276,
+            longitude: longitude ? longitude : 76.21,
+          }}
+        />
       </MapView>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+  map: {
+    marginTop: 20,
+    height: 200,
+    width: 400,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
 });
 
