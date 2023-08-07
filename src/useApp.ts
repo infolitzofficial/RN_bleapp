@@ -62,7 +62,7 @@ function useApp() {
         const granted = await PermissionsAndroid.requestMultiple(
           [
             PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-            PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION
+            PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION,
           ],
         );
         if (granted[PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION] === PermissionsAndroid.RESULTS.GRANTED) {
