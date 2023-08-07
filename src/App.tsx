@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { View, Text } from 'react-native';
 import useApp from './useApp';
 
@@ -15,4 +15,4 @@ function App(): JSX.Element {
   );
 }
 
-export default App;
+export default memo(App);
